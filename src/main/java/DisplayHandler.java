@@ -3,6 +3,10 @@ import java.util.Scanner;
 public class DisplayHandler {
     Scanner scanner = new Scanner(System.in);
     public record Computation(double num1, int operatorValue, double num2) {}
+    public enum errors {
+        DIVISIBLEBYZERO,
+        OPERATORINDEXOUTOFRANGE
+    }
 
     public Computation introMessage(){
         String[] operations = {"Add", "Subtract", "Multiply", "Divide"};
@@ -17,8 +21,7 @@ public class DisplayHandler {
 
         int operatorVal = scanner.nextInt();
         if (operatorVal > 4 || operatorVal < 1){
-            IO.println("Error: Operator value should only be between 1 and 4.");
-            System.exit(0);
+            displayError(errors.OPERATORINDEXOUTOFRANGE);
         }
 
         IO.println("Select your first number: ");
@@ -32,5 +35,16 @@ public class DisplayHandler {
         return new Computation(num1, operatorVal, num2);
     }
 
+    public void displayResult(double result){
+        IO.println("Your result is: " + result);
+    }
 
+    public void displayError(errors errorName){
+        switch (errorName){
+            case errors.DIVISIBLEBYZERO -> IO.println("Error: Cannot be divided by 0");
+            case errors.OPERATORINDEXOUTOFRANGE -> IO.println("Error: Operator value should only be between 1 and 4.");
+
+        }
+        System.exit(0);
+    }
 }

@@ -7,8 +7,14 @@ public class Calculator {
      */
 
     public static void main(String[] args){
+        DisplayHandler display = new DisplayHandler();
+        DisplayHandler.Computation comp = display.introMessage();
+        if (comp.num2() == 0 || comp.num1() == 0 && comp.operatorValue() == 4){
+            display.displayError(DisplayHandler.errors.DIVISIBLEBYZERO);
+        }
 
-
+        CalcEngine engine = new CalcEngine(comp.num1(), comp.num2(), comp.operatorValue());
+        double result = engine.calculateTotal();
+        display.displayResult(result);
     }
-
 }
