@@ -2,9 +2,10 @@ import java.util.Scanner;
 
 public class DisplayHandler {
     Scanner scanner = new Scanner(System.in);
-    public record Computation(int num1, int operatorValue, int num2) {}
+    public record Computation(double num1, int operatorValue, double num2) {}
 
     public Computation introMessage(){
+        String[] operations = {"Add", "Subtract", "Multiply", "Divide"};
         IO.println("Welcome to the Calculator app.");
         IO.println("Select what operation you would like to perform.");
         IO.print("""
@@ -14,17 +15,19 @@ public class DisplayHandler {
                 4 - Divide
                 """);
 
-        String[] operations = {"Add", "Subtract", "Multiply", "Divide"};
-
         int operatorVal = scanner.nextInt();
+        if (operatorVal > 4 || operatorVal < 1){
+            IO.println("Error: Operator value should only be between 1 and 4.");
+            System.exit(0);
+        }
 
         IO.println("Select your first number: ");
 
-        int num1 = scanner.nextInt();
+        double num1 = scanner.nextDouble();
 
         IO.println("And what number would you like to " + operations[operatorVal - 1] + " by?");
 
-        int num2 = scanner.nextInt();
+        double num2 = scanner.nextDouble();
 
         return new Computation(num1, operatorVal, num2);
     }
